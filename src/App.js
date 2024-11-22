@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { DndContext } from "@dnd-kit/core";
+
+// import Canvas from "./Canvas";
+import Droppable from "./Droppable";
+import Draggable from "./Draggable";
+import { useState } from "react";
 
 function App() {
+  const [isDropped, setIsDropped] = useState(false);
+  const handleDragEnd = (event) => {
+    // if (event.over && event.over.id === "droppable") {
+    //   setIsDropped(true);
+    // }
+    console.log(event);
+  };
+  const handleDragStart = (event) => {
+    console.log(`handleDragStart = ${JSON.stringify(event)}`);
+  };
+  const handleDragMove = (event) => {
+    // console.log(event);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DndContext
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        onDragMove={handleDragMove}
+      >
+        {/* <Canvas></Canvas> */}
+        {!isDropped ? <Draggable /> : null}
+        <Droppable>{isDropped ? <Droppable /> : null}</Droppable>
+      </DndContext>
     </div>
   );
 }
